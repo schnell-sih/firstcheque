@@ -6,8 +6,8 @@ const Footer = () => {
   if (!user) return null; // Return null if user is null or undefined
 
   return (
-    <footer className="mt-16 w-full bg-black text-white py-10 px-6">
-      <div className="flex flex-col mb-12 md:flex-row justify-between w-[95%] mx-auto py-8">
+    <footer className="mt-16  w-full bg-stone-900 text-white py-4 px-6">
+      <div className="flex flex-col mb-12 md:flex-row justify-between w-[95%] mx-auto py-6">
         <div className="w-full md:w-1/2 ml-8">
           <div className="flex items-center gap-2 mb-4">
             <svg
@@ -26,7 +26,7 @@ const Footer = () => {
             </svg>
             <p className="text-xl font-bold">FirstCheque</p>
           </div>
-          <p className="text-md">
+          <p className="text-md text-left">
             We connect you to the jobs that fit your skills and passion.
             <br />
             Your journey to a better career starts here.
@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className="border-t border-white my-6 w-[95%] mx-auto" />
+      <hr className="border-t border-white my-4 w-[95%] mx-auto" />
       <p className="text-sm text-center">
         &copy; {new Date().getFullYear()} FirstCheque. All rights reserved.
       </p>
