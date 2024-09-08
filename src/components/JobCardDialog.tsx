@@ -53,7 +53,7 @@ const JobCardDialog: React.FC<JobCardDialogProps> = ({
           <p className="text-md">Skills: {skills}</p>
           <p className="text-md">Employer: {employer}</p>
         </div>
-        <div className="flex flex-row justify-between mt-8">
+        <div className="relative w-[75%] mx-auto flex flex-row justify-between mt-8">
           <button
             onClick={() => {
               console.log("Apply button clicked");
