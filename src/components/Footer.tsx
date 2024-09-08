@@ -36,10 +36,10 @@ const Footer = () => {
           <div className="text-left">
             <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
             <ul className="text-md leading-8">
-              <Link className="block" href={"/dashboard"}>
+              <Link className="block" href={"/"}>
                 Dashboard
               </Link>
-              <Link className="block" href={"/discover"}>
+              <Link className="block" href={"/explore"}>
                 Discover
               </Link>
               <Link className="block" href={"/chatbot"}>
