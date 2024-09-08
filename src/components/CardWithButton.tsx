@@ -24,18 +24,18 @@ const CardWithButton = ({
         }}
       />
       <div className="relative z-10 text-white">
-        <h1 className="text-3xl font-black">{title}</h1>
-        <p className="text-md font-extrabold">{description}</p>
+        <h1 className="text-3xl font-bold">{title}</h1>
+        <p className="text-md mt-1">{description}</p>
       </div>
       <Link href={href} className="absolute bottom-4 right-4">
-        <div className="rounded-full bg-black text-white w-12 h-12 flex items-center justify-center">
+        <div className="rounded-full bg-white w-12 h-12 flex items-center justify-center">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            stroke="white"
+            stroke="black"
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
