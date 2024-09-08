@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import InputField from "@/components/InputField";
 import Button from "@/components/Button";
 import Message from "@/components/Message";
-import { useRouter } from "next/navigation";
+import axios from "axios";
 
 interface MessageData {
   sender: "bot" | "user";
@@ -11,28 +11,59 @@ interface MessageData {
 }
 
 const Chat: React.FC = () => {
-  const router = useRouter();
   const [messages, setMessages] = useState<MessageData[]>([
-    { sender: "bot", text: "Hi there! How can I help you today?" },
+    {
+      sender: "bot",
+      text: "Hello, welcome to FirstCheque bot. How can I help you today? 🤖",
+    },
   ]);
   const [input, setInput] = useState<string>("");
 
-  const handleSendMessage = () => {
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const formatMessageToHTML = (message: string) => {
+    return message
+      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*(.*?)\*/g, "<em>$1</em>")
+      .replace(/(?:\r\n|\r|\n)/g, "<br>");
+  };
+
+  const handleSendMessage = async () => {
     if (!input.trim()) return;
 
     setMessages((prevMessages) => [
       ...prevMessages,
       { sender: "user", text: input },
     ]);
+
     setInput("");
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/chat", {
+        input_text: input,
+      });
+
+      const formattedResponse = formatMessageToHTML(response.data.response);
+
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: "bot", text: "This is a response from the bot!" },
+        { sender: "bot", text: formattedResponse },
       ]);
-    }, 1000);
+    } catch (error) {
+      console.error("Error fetching chatbot response:", error);
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          sender: "bot",
+          text: "Oops! Something went wrong. Please try again later.",
+        },
+      ]);
+    }
   };
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="relative flex flex-col h-screen w-full text-black bg-white">
@@ -45,6 +76,7 @@ const Chat: React.FC = () => {
               isUser={message.sender === "user"}
             />
           ))}
+          <div ref={bottomRef}></div>
         </div>
       </main>
 
@@ -59,9 +91,18 @@ const Chat: React.FC = () => {
           <Button onClick={handleSendMessage} text="Send" />
         </div>
       </footer>
+
       <Button
         onClick={() => {
-          router.push("/");
+          window.location.href = "/chatbot";
+        }}
+        text="Restart Chatbot"
+        className="absolute bottom-4 left-4 bg-green-900"
+      />
+
+      <Button
+        onClick={() => {
+          window.location.href = "/";
         }}
         text="Exit Chatbot"
         className="absolute bottom-4 right-4 bg-red-900"
