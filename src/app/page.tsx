@@ -1,3 +1,5 @@
+import LandingPage from "./LandingPage/page";
+
 export default function Home() {
-  return <div className="">Welcome to Our Project!</div>;
+  return <div className=""><LandingPage/></div>;
 }
