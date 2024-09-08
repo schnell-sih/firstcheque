@@ -6,7 +6,7 @@ const Footer = () => {
   if (!user) return null; // Return null if user is null or undefined
 
   return (
-    <footer className="mt-16  w-full bg-stone-900 text-white py-4 px-6">
+    <footer className="mt-16 w-full bg-black text-white py-4 px-6">
       <div className="flex flex-col mb-12 md:flex-row justify-between w-[95%] mx-auto py-6">
         <div className="w-full md:w-1/2 ml-8">
           <div className="flex items-center gap-2 mb-4">
