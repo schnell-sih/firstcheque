@@ -23,7 +23,6 @@ const Search = () => {
             description={data.description}
             imageUrl={data.imageUrl}
             href={data.href}
-            fontColor={data.fontColor}
           />
         ))}
       </div>
