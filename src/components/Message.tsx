@@ -9,7 +9,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser }) => {
       <div
         className={`${
           isUser ? "bg-gray-300 text-black" : "bg-gray-200 text-black"
-        } p-3 rounded-lg max-w-xs shadow-sm`}
+        } p-3 rounded-lg max-w-xs shadow-sm border border-black`}
       >
         {text}
       </div>

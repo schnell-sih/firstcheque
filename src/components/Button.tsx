@@ -3,13 +3,16 @@ import React from "react";
 interface ButtonProps {
   text: string;
   onClick: () => void;
+  className?: string;
 }
 
-const Button = ({ text, onClick }: ButtonProps) => {
+const Button = ({ text, onClick, className }: ButtonProps) => {
   return (
-    <div className="w-auto flex items-center justify-center">
+    <div
+      className={`w-auto flex items-center justify-center bg-black rounded-lg ${className}`}
+    >
       <button
-        className="bg-black hover:shadow-md hover:shadow-zinc-500 transition-shadow duration-300 ease-in-out block text-white rounded-lg px-6 py-2"
+        className="hover:shadow-md hover:shadow-zinc-500 transition-shadow duration-300 ease-in-out block text-white px-6 py-2"
         onClick={onClick}
       >
         {text}

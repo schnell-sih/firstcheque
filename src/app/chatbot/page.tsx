@@ -3,6 +3,7 @@ import { useState } from "react";
 import InputField from "@/components/InputField";
 import Button from "@/components/Button";
 import Message from "@/components/Message";
+import { useRouter } from "next/navigation";
 
 interface MessageData {
   sender: "bot" | "user";
@@ -10,6 +11,7 @@ interface MessageData {
 }
 
 const Chat: React.FC = () => {
+  const router = useRouter();
   const [messages, setMessages] = useState<MessageData[]>([
     { sender: "bot", text: "Hi there! How can I help you today?" },
   ]);
@@ -33,7 +35,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen w-full text-black bg-white">
+    <div className="relative flex flex-col h-screen w-full text-black bg-white">
       <main className="flex-grow p-6 overflow-y-auto">
         <div className="space-y-4">
           {messages.map((message, index) => (
@@ -57,6 +59,13 @@ const Chat: React.FC = () => {
           <Button onClick={handleSendMessage} text="Send" />
         </div>
       </footer>
+      <Button
+        onClick={() => {
+          router.push("/");
+        }}
+        text="Exit Chatbot"
+        className="absolute bottom-4 right-4 bg-red-900"
+      />
     </div>
   );
 };
