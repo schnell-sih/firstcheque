@@ -2,8 +2,10 @@
 import React from "react";
 import Link from "next/link";
 import { withAuthOptions, withoutAuthOptions } from "@/data/NavList";
+
 const NavLink = () => {
-  let user = true;
+  const user = true;
+
   return (
     <nav>
       <ul className="flex space-x-4">
@@ -12,7 +14,7 @@ const NavLink = () => {
               <li key={index}>
                 <Link
                   href={option.route}
-                  className="py-2 px-3 text-zinc-800 hover:text-black rounded md:bg-transparent md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="rounded hover:bg-slate-200 text-lg p-2 md:bg-transparent font-semibold"
                 >
                   {option.title}
                 </Link>
@@ -22,7 +24,7 @@ const NavLink = () => {
               <li key={index}>
                 <Link
                   href={option.route}
-                  className="py-2 px-3 text-zinc-800 hover:text-black rounded md:bg-transparent md:p-0 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+                  className="py-2 px-3 hover:text-black rounded md:bg-transparent md:p-0"
                 >
                   {option.title}
                 </Link>
