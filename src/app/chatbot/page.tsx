@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import InputField from "@/components/InputField";
-import Button from "@/components/ButtonInput";
+import Button from "@/components/Button";
 import Message from "@/components/Message";
 
 interface MessageData {
@@ -47,14 +47,14 @@ const Chat: React.FC = () => {
       </main>
 
       <footer className="bg-white p-4 flex items-center border-t border-gray-300">
-        <div className="flex w-full max-w-xl mx-auto">
+        <div className="flex w-full max-w-3xl mx-auto">
           <InputField
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your message..."
             className="mr-2 flex-grow"
           />
-          <Button onClick={handleSendMessage}>Send</Button>
+          <Button onClick={handleSendMessage} text="Send" />
         </div>
       </footer>
     </div>
