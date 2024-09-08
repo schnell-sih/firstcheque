@@ -13,7 +13,7 @@ const NavBar = () => {
   };
 
   return (
-    <div className="flex fixed flex-row z-20 justify-between bg-white w-full items-center px-12 py-4">
+    <div className="flex flex-row z-20 justify-between w-full items-center px-12 py-4">
       <div className="flex items-center space-x-8">
         <a href="/" className="flex items-center space-x-3 rtl:space-x-reverse">
           <svg
