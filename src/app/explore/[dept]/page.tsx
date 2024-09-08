@@ -15,7 +15,12 @@ const paramJobNameMapping = {
 
 export default function Page({ params }: { params: { dept: string } }) {
   const renderJobs = (
-    jobs: { title: string; skills: string; employer: string }[]
+    jobs: {
+      title: string;
+      skills: string;
+      employer: string;
+      description: string;
+    }[]
   ) => (
     <>
       {jobs.length === 0 ? (
@@ -31,6 +36,7 @@ export default function Page({ params }: { params: { dept: string } }) {
               title={job.title}
               skills={job.skills}
               employer={job.employer}
+              description={job.description}
               shadow={false}
             />
           ))}
