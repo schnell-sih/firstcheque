@@ -6,8 +6,8 @@ const Footer = () => {
   if (!user) return null; // Return null if user is null or undefined
 
   return (
-    <footer className="mt-16  w-full bg-stone-900 text-white py-4 px-6">
-      <div className="flex flex-col mb-12 md:flex-row justify-between w-[95%] mx-auto py-6">
+    <footer className="mt-16 w-full bg-black text-white py-4 px-6">
+      <div className="flex flex-col mb-12 md:flex-row justify-between w-[90%] mx-auto py-6">
         <div className="w-full md:w-1/2 ml-8">
           <div className="flex items-center gap-2 mb-4">
             <svg
@@ -36,10 +36,10 @@ const Footer = () => {
           <div className="text-left">
             <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
             <ul className="text-md leading-8">
-              <Link className="block" href={"/dashboard"}>
+              <Link className="block" href={"/"}>
                 Dashboard
               </Link>
-              <Link className="block" href={"/discover"}>
+              <Link className="block" href={"/explore"}>
                 Discover
               </Link>
               <Link className="block" href={"/chatbot"}>
@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <hr className="border-t border-white my-4 w-[95%] mx-auto" />
+      <hr className="border-t border-white my-4 w-[90%] mx-auto" />
       <p className="text-sm text-center">
         &copy; {new Date().getFullYear()} FirstCheque. All rights reserved.
       </p>

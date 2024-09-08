@@ -14,7 +14,7 @@ const NavLink = () => {
               <li key={index}>
                 <Link
                   href={option.route}
-                  className="rounded hover:bg-slate-200 text-lg p-2 md:bg-transparent font-semibold"
+                  className="rounded-lg hover:bg-slate-200 text-lg py-2 px-4 md:bg-transparent font-semibold"
                 >
                   {option.title}
                 </Link>
@@ -24,7 +24,7 @@ const NavLink = () => {
               <li key={index}>
                 <Link
                   href={option.route}
-                  className=" text-stone-900 py-2 px-3 hover:text-stone-900 rounded md:bg-transparent md:p-0"
+                  className=" text-black py-2 px-3 hover:text-black rounded md:bg-transparent md:p-0"
                 >
                   {option.title}
                 </Link>

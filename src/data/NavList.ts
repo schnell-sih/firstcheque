@@ -3,12 +3,12 @@ interface navOptions {
   route: string;
 }
 const withAuthOptions: navOptions[] = [
-  { title: "Dashboard", route: "/" },
-  { title: "Discover", route: "/discover" },
+  { title: "Discover", route: "/" },
+  { title: "Explore", route: "/explore" },
   { title: "ChatBot", route: "/chatbot" },
 ];
 const withoutAuthOptions: navOptions[] = [
   { title: "Home", route: "/" },
-  { title: "Discover", route: "/discover" },
+  { title: "Explore", route: "/explore" },
 ];
 export { withAuthOptions, withoutAuthOptions };

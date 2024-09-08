@@ -16,11 +16,34 @@ import { cn } from "@/lib/utils";
 export function SignupFormDemo() {
   const [selectedState, setSelectedState] = useState<string | null>(null);
   const states = [
-    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat",
-    "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", 
-    "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", 
-    "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", 
-    "Uttarakhand", "West Bengal"
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttar Pradesh",
+    "Uttarakhand",
+    "West Bengal",
   ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -33,24 +56,39 @@ export function SignupFormDemo() {
       <h2 className="font-bold text-xl text-neutral-800 dark:text-neutral-200">
         Create a job
       </h2>
-      
+
       <form className="my-8" onSubmit={handleSubmit}>
         {/* Job Name */}
         <LabelInputContainer className="mb-4">
           <Label htmlFor="jobname">Job Name</Label>
-          <Input id="jobname" placeholder="Software Developer" type="text" className="placeholder:font-light" />
+          <Input
+            id="jobname"
+            placeholder="Software Developer"
+            type="text"
+            className="placeholder:font-light"
+          />
         </LabelInputContainer>
 
         {/* Job Description */}
         <LabelInputContainer className="mb-4">
           <Label htmlFor="jobdescription">Job Description</Label>
-          <Input id="jobdescription" placeholder="Enter job description..." type="text" className="placeholder:font-light" />
+          <Input
+            id="jobdescription"
+            placeholder="Enter job description..."
+            type="text"
+            className="placeholder:font-light"
+          />
         </LabelInputContainer>
 
         {/* Skills Required */}
         <LabelInputContainer className="mb-4">
           <Label htmlFor="skills">Skills Required</Label>
-          <Input id="skills" placeholder="E.g., React, Node.js..." type="text" className="placeholder:font-light" />
+          <Input
+            id="skills"
+            placeholder="E.g., React, Node.js..."
+            type="text"
+            className="placeholder:font-light"
+          />
         </LabelInputContainer>
 
         {/* State and City Fields */}
@@ -66,7 +104,7 @@ export function SignupFormDemo() {
                   readOnly
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-60 max-h-44 overflow-y-auto rounded-md bg-white text-stone-900 shadow-lg">
+              <DropdownMenuContent className="w-60 max-h-44 overflow-y-auto rounded-md bg-white text-black shadow-lg">
                 <DropdownMenuLabel>Select a State</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {states.sort().map((state) => (
@@ -82,7 +120,12 @@ export function SignupFormDemo() {
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="city">City</Label>
-            <Input id="city" placeholder="City" type="text" className="placeholder:font-light" />
+            <Input
+              id="city"
+              placeholder="City"
+              type="text"
+              className="placeholder:font-light"
+            />
           </LabelInputContainer>
         </div>
 
@@ -90,11 +133,21 @@ export function SignupFormDemo() {
         <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
           <LabelInputContainer>
             <Label htmlFor="higherValue">Higher Value</Label>
-            <Input id="higherValue" placeholder="100" type="text" className="placeholder:font-light" />
+            <Input
+              id="higherValue"
+              placeholder="100"
+              type="text"
+              className="placeholder:font-light"
+            />
           </LabelInputContainer>
           <LabelInputContainer>
             <Label htmlFor="lowerValue">Lower Value</Label>
-            <Input id="lowerValue" placeholder="10" type="number" className="placeholder:font-light" />
+            <Input
+              id="lowerValue"
+              placeholder="10"
+              type="number"
+              className="placeholder:font-light"
+            />
           </LabelInputContainer>
         </div>
 
