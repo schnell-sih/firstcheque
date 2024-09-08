@@ -15,7 +15,7 @@ const CardWithButton = ({
   href,
 }: CardWithButtonProps) => {
   return (
-    <div className="relative rounded-lg border-2 border-black w-60 h-60 p-4 overflow-hidden">
+    <div className="relative rounded-lg border border-black w-60 h-60 p-4 shadow-2xl overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{

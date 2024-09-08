@@ -8,11 +8,9 @@ interface ButtonProps {
 
 const Button = ({ text, onClick, className }: ButtonProps) => {
   return (
-    <div
-      className={`w-auto flex items-center justify-center bg-black rounded-lg ${className}`}
-    >
+    <div className="flex items-center justify-center">
       <button
-        className="hover:shadow-md hover:shadow-zinc-500 transition-shadow duration-300 ease-in-out block text-white px-6 py-2"
+        className={`hover:shadow-md hover:shadow-zinc-500 transition-shadow duration-300 ease-in-out block bg-black text-white px-6 py-2 rounded-lg ${className}`}
         onClick={onClick}
       >
         {text}
