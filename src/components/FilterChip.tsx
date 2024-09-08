@@ -141,7 +141,7 @@ const Chip = () => {
   }, [selectedSkills, selectedStates]);
 
   return (
-    <div className="relative inline-block mt-4">
+    <div className="relative inline-block mt-4 z-50">
       {/* Active filter chips */}
       <div className="flex space-x-2 mb-4">
         {activeChips.map((chip, index) => (
