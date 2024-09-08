@@ -15,6 +15,7 @@ const SkillRecomendation = () => {
             title={job.title}
             skills={job.skills}
             employer={job.employer}
+            description={job.description}
           />
         ))}
       </div>
