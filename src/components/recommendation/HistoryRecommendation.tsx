@@ -1,5 +1,5 @@
 import { HistoryData } from "@/data/HistoryData";
-import JobCard from "../JobCard";
+import JobCard from "../jobCard/JobCard";
 import React from "react";
 
 const HistoryRecommendations = () => {

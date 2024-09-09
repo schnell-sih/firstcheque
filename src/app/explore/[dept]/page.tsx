@@ -1,4 +1,4 @@
-import JobCard from "@/components/JobCard";
+import JobCard from "@/components/jobCard/JobCard";
 import NavBar from "@/components/navigation/NavBar";
 import { TechJobs } from "@/data/TechJobs";
 import { DesignJobs } from "@/data/DesignJobs";
