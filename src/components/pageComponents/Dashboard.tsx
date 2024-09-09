@@ -1,6 +1,6 @@
 "use client";
-import SkillRecomendation from "@/components/SkillRecommendations";
-import HistoryRecommendations from "@/components/HistoryRecommendation";
+import SkillRecomendation from "@/components/recommendation/SkillRecommendations";
+import HistoryRecommendations from "@/components/recommendation/HistoryRecommendation";
 
 const Dashboard = () => {
   return (
