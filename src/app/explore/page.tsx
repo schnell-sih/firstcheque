@@ -1,8 +1,8 @@
-import CardWithButton from "@/components/CardWithButton";
-import Chip from "@/components/FilterChip";
+import CardWithButton from "@/components/ui/CardWithButton";
+import Chip from "@/components/ui/FilterChip";
 import Footer from "@/components/navigation/Footer";
 import NavBar from "@/components/navigation/NavBar";
-import SearchBar from "@/components/SearchBar";
+import SearchBar from "@/components/ui/SearchBar";
 import { exploreData } from "@/data/ExploreData";
 import React from "react";
 

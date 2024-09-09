@@ -2,7 +2,7 @@
 import React from "react";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
-import Button from "../Button";
+import Button from "../ui/Button";
 
 const NavBar = () => {
   const user = true;

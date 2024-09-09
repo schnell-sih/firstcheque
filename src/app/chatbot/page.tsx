@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import InputField from "@/components/InputField";
-import Button from "@/components/Button";
-import Message from "@/components/Message";
+import InputField from "@/components/ui/InputField";
+import Button from "@/components/ui/Button";
+import Message from "@/components/ui/Message";
 import axios from "axios";
 
 interface MessageData {
