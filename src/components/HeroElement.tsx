@@ -2,7 +2,7 @@ import React from "react";
 
 const HeroElement = () => {
   return (
-    <div className="p-32 text-black">
+    <div className="p-40 text-black flex flex-col items-center text-center justify-center">
       <h1 className="text-6xl font-semibold">
         Elevating Talent, Delivering Excellence.
       </h1>
