@@ -10,7 +10,7 @@ const Search = () => {
   return (
     <div>
       <NavBar />
-      <div className="flex flex-col items-start w-[80%] mx-auto">
+      <div className="flex flex-col items-start w-[75%] mx-auto">
         <h1 className="text-[5rem] font-bold mt-24">Explore</h1>
         <SearchBar />
         <Chip />
