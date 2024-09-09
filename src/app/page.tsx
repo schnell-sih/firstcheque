@@ -1,6 +1,6 @@
-import Footer from "@/components/Footer";
-import HeroElement from "@/components/HeroElement";
-import NavBar from "@/components/NavBar";
+import Footer from "@/components/navigation/Footer";
+import HeroElement from "@/components/pageComponents/HeroElement";
+import NavBar from "@/components/navigation/NavBar";
 import Dashboard from "@/components/pageComponents/Dashboard";
 
 export default function Home() {
