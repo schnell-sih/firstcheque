@@ -2,13 +2,12 @@ import React from "react";
 
 const HeroElement = () => {
   return (
-    <div>
-      <h1 className="text-5xl mt-52 text-black font-bold">
+    <div className="p-32 text-black">
+      <h1 className="text-6xl font-semibold">
         Elevating Talent, Delivering Excellence.
       </h1>
-      <p className="mt-10 text-lg mb-40">
-        {" "}
-        Your one-stop solution to finding the best jobs.{" "}
+      <p className="mt-8 text-xl">
+        Your one-stop solution to finding the best jobs.
       </p>
     </div>
   );
