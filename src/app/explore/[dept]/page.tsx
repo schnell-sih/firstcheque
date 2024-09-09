@@ -1,10 +1,10 @@
-import JobCard from "@/components/JobCard";
-import NavBar from "@/components/NavBar";
+import JobCard from "@/components/jobCard/JobCard";
+import NavBar from "@/components/navigation/NavBar";
 import { TechJobs } from "@/data/TechJobs";
 import { DesignJobs } from "@/data/DesignJobs";
 import { MarketingJobs } from "@/data/MarketingJobs";
 import { WritingJobs } from "@/data/WritingJobs";
-import Footer from "@/components/Footer";
+import Footer from "@/components/navigation/Footer";
 
 const paramJobNameMapping = {
   tech: "Tech",

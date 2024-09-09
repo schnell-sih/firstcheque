@@ -1,15 +1,15 @@
-import { HistoryData } from "@/data/HistoryData";
-import JobCard from "./JobCard";
 import React from "react";
+import JobCard from "../jobCard/JobCard";
+import { SkillRecommendationData } from "@/data/SkillData";
 
-const HistoryRecommendations = () => {
+const SkillRecomendation = () => {
   return (
     <div className="my-16 flex flex-col items-left">
       <h1 className="text-3xl text-left font-semibold">
-        History Recommendations
+        Skill Recommendations
       </h1>
       <div className="grid grid-cols-3 gap-8 my-8">
-        {HistoryData.map((job) => (
+        {SkillRecommendationData.map((job) => (
           <JobCard
             key={job.title}
             title={job.title}
@@ -23,4 +23,4 @@ const HistoryRecommendations = () => {
   );
 };
 
-export default HistoryRecommendations;
+export default SkillRecomendation;
