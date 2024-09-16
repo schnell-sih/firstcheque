@@ -1,16 +1,35 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavLink from "./NavLink";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
+import { createClient } from "@/utils/supabase/client";
+import { User } from "@supabase/supabase-js";
 
 const NavBar = () => {
-  const user = true;
+  const supabase = createClient();
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   const handleProfileClick = () => {
     router.push("/profile");
   };
+
+  const handleSignInClick = () => {
+    supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+  };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data && data.session) {
+        setUser(data.session.user); // Properly set the user if session exists
+      }
+    };
+    fetchUser();
+  }, [supabase.auth]);
 
   return (
     <div className="flex flex-row z-20 justify-between w-full items-center px-12 py-4">
@@ -42,9 +61,9 @@ const NavBar = () => {
 
       <div>
         {user ? (
-          <Button onClick={() => {}} text="Profile" />
+          <Button onClick={handleProfileClick} text="Profile" />
         ) : (
-          <Button onClick={() => {}} text="Login" />
+          <Button onClick={handleSignInClick} text="Login" />
         )}
       </div>
     </div>

@@ -11,7 +11,7 @@ const Message: React.FC<MessageProps> = ({ text, isUser }) => {
           isUser
             ? "bg-gray-200 text-black border-gray-800"
             : "bg-gray-100 text-black border-gray-400"
-        } p-4 rounded-lg max-w-lg shadow-sm`}
+        } p-4 rounded-lg max-w-xl shadow-sm`}
         dangerouslySetInnerHTML={{ __html: text }}
       ></div>
     </div>
