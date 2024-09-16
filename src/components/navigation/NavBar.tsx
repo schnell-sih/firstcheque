@@ -21,6 +21,17 @@ const NavBar = () => {
     });
   };
 
+  const handleSignOutClick = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error.message);
+      return;
+    }
+
+    setUser(null);
+    router.push("/");
+  };
+
   const checkUserProfile = async (user: User) => {
     const { data, error } = await supabase
       .from("user")
@@ -79,7 +90,14 @@ const NavBar = () => {
 
       <div>
         {user ? (
-          <Button onClick={handleProfileClick} text="Profile" />
+          <div className="grid grid-cols-2 gap-4">
+            <Button onClick={handleProfileClick} text="Profile" />
+            <Button
+              onClick={handleSignOutClick}
+              className="bg-red-900"
+              text="Logout"
+            />
+          </div>
         ) : (
           <Button onClick={handleSignInClick} text="Login" />
         )}
