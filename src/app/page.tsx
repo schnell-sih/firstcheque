@@ -5,38 +5,9 @@ import NavBar from "@/components/navigation/NavBar";
 import FreelancerDashboard from "@/components/pageComponents/FreelancerDashboard";
 import { useUser } from "@/context/UserContext";
 import EmployerDashboard from "@/components/pageComponents/EmployerDashboard";
-import { useEffect, useState } from "react";
-import { createClient } from "@/utils/supabase/client";
 
 export default function Home() {
-  const { user } = useUser();
-  const [role, setRole] = useState<string | undefined>(undefined);
-  const [loading, setLoading] = useState(true); // Added loading state
-  const supabase = createClient();
-
-  useEffect(() => {
-    const fetchRole = async () => {
-      if (user) {
-        const { data, error } = await supabase
-          .from("user")
-          .select("role")
-          .eq("userid", user.id)
-          .single();
-
-        if (error) {
-          console.error(error);
-        } else if (data) {
-          console.log(data);
-          setRole(data.role);
-        }
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
-    };
-
-    fetchRole();
-  }, [user, supabase]);
+  const { user, role, loading } = useUser();
 
   if (loading) {
     return (

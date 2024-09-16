@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/UserContext";
 import Button from "../ui/Button";
@@ -8,7 +8,7 @@ import NavLink from "@/components/navigation/NavLink";
 
 const NavBar = () => {
   const supabase = createClient();
-  const { user, setUser } = useUser();
+  const { user, role, setUser } = useUser();
   const router = useRouter();
 
   const handleProfileClick = () => {
@@ -72,7 +72,7 @@ const NavBar = () => {
       </div>
 
       <div>
-        <NavLink user={user} />
+        <NavLink user={user} role={role} />
       </div>
 
       <div>
