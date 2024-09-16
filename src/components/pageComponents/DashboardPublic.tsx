@@ -1,6 +1,6 @@
 import React from "react";
 
-const HeroElement = () => {
+const DashboardPublic = () => {
   return (
     <div className="p-40 text-black flex flex-col items-center text-center justify-center">
       <h1 className="text-6xl font-semibold">
@@ -13,4 +13,4 @@ const HeroElement = () => {
   );
 };
 
-export default HeroElement;
+export default DashboardPublic;
