@@ -76,8 +76,8 @@ const Chat: React.FC = () => {
   }, [messages]);
 
   return (
-    <div className="relative flex flex-col h-screen w-full text-black bg-white">
-      <main className="flex-grow p-6 overflow-y-auto">
+    <div className="relative flex flex-col h-screen text-black bg-white">
+      <main className="flex-grow p-6 overflow-y-auto w-[60%] mx-auto">
         <div className="space-y-4">
           {messages.map((message, index) => (
             <Message
