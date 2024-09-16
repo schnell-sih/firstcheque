@@ -145,64 +145,58 @@ const CompleteProfile = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen justify-center items-center text-center bg-black">
-      <h1 className="text-4xl font-bold text-white">Complete your profile</h1>
-      <div className="p-6 flex flex-col rounded-xl border border-gray-300 bg-white text-black mt-6 shadow-lg w-80">
-        <Select
-          options={[
-            { label: "Employer", value: "employer" },
-            { label: "Freelancer", value: "freelancer" },
-          ]}
-          placeholder="Select your role"
-          onSelect={handleRoleSelect}
-          className="mb-4"
-        />
-
-        {profileData.role === "freelancer" && (
-          <div className="grid grid-rows-2 gap-4">
-            <Input
-              placeholder="Skills"
-              value={profileData.skills}
-              onTextChange={(value) => handleInputChange("skills", value)}
-            />
-            <Input
-              placeholder="Age"
-              value={profileData.age}
-              type="number"
-              onTextChange={(value) => handleInputChange("age", value)}
-            />
-            <Input
-              placeholder="Gender"
-              value={profileData.gender}
-              onTextChange={(value) => handleInputChange("gender", value)}
-            />
-            <Button
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white"
-              text="Submit"
-            />
-          </div>
-        )}
-
-        {profileData.role === "employer" && (
-          <div className="grid grid-rows-2 gap-4">
-            <Input
-              placeholder="Company name"
-              value={profileData.companyName}
-              onTextChange={(value) => handleInputChange("companyName", value)}
-            />
-            <Input
-              placeholder="Website"
-              value={profileData.website}
-              onTextChange={(value) => handleInputChange("website", value)}
-            />
-            <Button
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white"
-              text="Submit"
-            />
-          </div>
-        )}
+    <div className="flex flex-col h-screen justify-center items-center text-center">
+      <div className="rounded-2xl border-2 border-black p-8">
+        <h1 className="text-4xl font-bold">Complete your profile</h1>
+        <div className="flex flex-col mt-8 w-[25rem]">
+          <Select
+            options={[
+              { label: "Employer", value: "employer" },
+              { label: "Freelancer", value: "freelancer" },
+            ]}
+            placeholder="Select your role"
+            onSelect={handleRoleSelect}
+            className={`${profileData.role ? "mb-4" : ""}`}
+          />
+          {profileData.role === "freelancer" && (
+            <div className="grid grid-rows-2 gap-4">
+              <Input
+                placeholder="Skills"
+                value={profileData.skills}
+                onTextChange={(value) => handleInputChange("skills", value)}
+              />
+              <Input
+                placeholder="Age"
+                value={profileData.age}
+                type="number"
+                onTextChange={(value) => handleInputChange("age", value)}
+              />
+              <Input
+                placeholder="Gender"
+                value={profileData.gender}
+                onTextChange={(value) => handleInputChange("gender", value)}
+              />
+              <Button onClick={handleSubmit} text="Submit" />
+            </div>
+          )}
+          {profileData.role === "employer" && (
+            <div className="grid grid-rows-2 gap-4">
+              <Input
+                placeholder="Company name"
+                value={profileData.companyName}
+                onTextChange={(value) =>
+                  handleInputChange("companyName", value)
+                }
+              />
+              <Input
+                placeholder="Website"
+                value={profileData.website}
+                onTextChange={(value) => handleInputChange("website", value)}
+              />
+              <Button onClick={handleSubmit} text="Submit" />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
