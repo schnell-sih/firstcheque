@@ -1,15 +1,18 @@
+"use client";
 import Footer from "@/components/navigation/Footer";
-import HeroElement from "@/components/pageComponents/HeroElement";
+import DashboardPublic from "@/components/pageComponents/DashboardPublic";
 import NavBar from "@/components/navigation/NavBar";
-import Dashboard from "@/components/pageComponents/Dashboard";
+import DashboardPrivate from "@/components/pageComponents/DashboardPrivate";
+import { useUser } from "@/context/UserContext";
 
 export default function Home() {
+  const { user } = useUser();
+
   return (
     <main>
       <NavBar />
       <div className=" flex flex-col items-center text-center justify-center">
-        <Dashboard />
-        {/* <HeroElement /> */}
+        {user ? <DashboardPrivate /> : <DashboardPublic />}
       </div>
       <Footer />
     </main>

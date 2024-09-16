@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { UserProvider } from "@/context/UserContext";
 
 export const metadata: Metadata = {
   title: "FirstCheque",
@@ -59,7 +60,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${cygre.className} antialiased`}>{children}</body>
+      <UserProvider>
+        <body className={`${cygre.className} antialiased`}>{children}</body>
+      </UserProvider>
     </html>
   );
 }
