@@ -29,11 +29,12 @@ const NavBar = () => {
       .single();
 
     if (error && error.code === "PGRST116") {
-      const { error: insertError } = await supabase.from("users").insert([
+      const { error: insertError } = await supabase.from("user").insert([
         {
-          id: user.id,
+          userid: user.id,
           name: user.user_metadata.full_name,
           email: user.email,
+          role: "",
           profileCompleted: false,
         },
       ]);
@@ -73,7 +74,7 @@ const NavBar = () => {
       </div>
 
       <div>
-        <NavLink />
+        <NavLink user={user} />
       </div>
 
       <div>
