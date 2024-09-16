@@ -11,7 +11,7 @@ interface NavLinkProps {
 const NavLink = ({ user }: NavLinkProps) => {
   return (
     <nav>
-      <ul className="flex space-x-4">
+      <ul className="flex-1 flex justify-center">
         {user
           ? withAuthOptions.map((option, index) => (
               <li key={index}>
@@ -37,4 +37,5 @@ const NavLink = ({ user }: NavLinkProps) => {
     </nav>
   );
 };
+
 export default NavLink;
