@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import NavLink from "./NavLink";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
 import Button from "../ui/Button";
 import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
+import NavLink from "@/components/navigation/NavLink";
 
 const NavBar = () => {
   const supabase = createClient();
-  const [user, setUser] = useState<User | null>(null);
+  const { user, setUser } = useUser();
   const router = useRouter();
 
   const handleProfileClick = () => {
@@ -16,9 +16,7 @@ const NavBar = () => {
   };
 
   const handleSignInClick = () => {
-    supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
+    supabase.auth.signInWithOAuth({ provider: "google" });
   };
 
   const handleSignOutClick = async () => {
@@ -27,24 +25,23 @@ const NavBar = () => {
       console.error("Error signing out:", error.message);
       return;
     }
-
     setUser(null);
     router.push("/");
   };
 
-  const checkUserProfile = async (user: User) => {
+  const checkUserProfile = async (userId: string) => {
     const { data, error } = await supabase
       .from("user")
       .select("profileCompleted")
-      .eq("userid", user.id)
+      .eq("userid", userId)
       .single();
 
     if (error && error.code === "PGRST116") {
       const { error: insertError } = await supabase.from("user").insert([
         {
-          userid: user.id,
-          name: user.user_metadata.full_name,
-          email: user.email,
+          userid: user?.id,
+          name: user?.user_metadata.full_name,
+          email: user?.email,
           role: "",
           profileCompleted: false,
         },
@@ -53,26 +50,16 @@ const NavBar = () => {
       if (insertError) {
         console.error("Error inserting user:", insertError.message);
       }
-
+    } else if (data && !data.profileCompleted) {
       router.push("/completeProfile");
-    } else if (data) {
-      if (!data.profileCompleted) {
-        router.push("/completeProfile");
-      }
     }
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (data && data.session) {
-        const loggedInUser = data.session.user;
-        setUser(loggedInUser);
-        checkUserProfile(loggedInUser);
-      }
-    };
-    fetchUser();
-  }, [supabase.auth]);
+    if (user) {
+      checkUserProfile(user.id);
+    }
+  }, [user]);
 
   return (
     <div className="flex flex-row z-20 justify-between w-full items-center px-12 py-4">
