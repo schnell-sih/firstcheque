@@ -1,1 +1,3 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+![alt text](fc.png)
+
+FirstCheque is a freelancing platform.
