@@ -1,14 +1,14 @@
 "use client";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/context/UserContext";
 import Button from "../ui/Button";
 import { createClient } from "@/utils/supabase/client";
 import NavLink from "@/components/navigation/NavLink";
+import { AuthInfo } from "@/context/AuthInfo";
 
 const NavBar = () => {
   const supabase = createClient();
-  const { user, setUser } = useUser();
+  const { user, setUser, role, setRole } = useContext(AuthInfo);
   const router = useRouter();
 
   const handleProfileClick = () => {
@@ -52,6 +52,20 @@ const NavBar = () => {
       }
     } else if (data && !data.profileCompleted) {
       router.push("/completeProfile");
+    } else if (data && data.profileCompleted) {
+      const { data: roleData, error: roleError } = await supabase
+        .from("user")
+        .select("role")
+        .eq("userid", userId)
+        .single();
+      if (roleError) {
+        console.error("Error fetching role:", roleError.message);
+        return;
+      }
+
+      if (roleData && roleData.role) {
+        setRole(roleData.role);
+      }
     }
   };
 
@@ -72,7 +86,7 @@ const NavBar = () => {
       </div>
 
       <div>
-        <NavLink user={user} />
+        <NavLink user={user} role={role} />
       </div>
 
       <div>
