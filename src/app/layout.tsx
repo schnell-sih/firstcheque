@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
+"use client";
 import localFont from "next/font/local";
 import "./globals.css";
-import { UserProvider } from "@/context/UserContext";
+import { AuthInfo } from "@/context/AuthInfo";
+import { useEffect, useMemo, useState } from "react";
+import { User } from "@supabase/supabase-js";
+import { createClient } from "@/utils/supabase/client";
 
-export const metadata: Metadata = {
-  title: "FirstCheque",
-  description: "FirstCheque is a platform for freelancers",
-};
+const supabase = createClient();
 
 const cygre = localFont({
   src: [
@@ -58,11 +58,43 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<string | null>(null);
+
+  const authInfoValue = useMemo(
+    () => ({ user, setUser, role, setRole }),
+    [user, role]
+  );
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data && data.session) {
+        setUser(data.session.user);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  useEffect(() => {
+    console.log("user", user);
+  }, [user]);
+
   return (
     <html lang="en">
-      <UserProvider>
+      <head>
+        <link
+          rel="preload"
+          href="../fonts/Cygre-Regular.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <AuthInfo.Provider value={authInfoValue}>
         <body className={`${cygre.className} antialiased`}>{children}</body>
-      </UserProvider>
+      </AuthInfo.Provider>
     </html>
   );
 }
