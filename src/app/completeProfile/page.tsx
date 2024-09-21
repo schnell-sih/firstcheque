@@ -1,28 +1,35 @@
 "use client";
 import Input from "@/components/ui/Input";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { createClient } from "@/utils/supabase/client";
-import { User } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
+import { AuthInfo } from "@/context/AuthInfo";
 
 const CompleteProfile = () => {
   const supabase = createClient();
   const router = useRouter();
-  const [user, setUser] = React.useState<User | null>(null);
+  const { user, setUser, role, setRole } = useContext(AuthInfo);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (data && data.session) {
-        setUser(data.session.user);
-        console.log(data.session.user);
-      }
-    };
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">You are not logged in.</h1>
+        <Button
+          onClick={() => {
+            window.location.href = "/";
+          }}
+          text="Login to continue"
+          className="mt-4"
+        />
+      </div>
+    );
+  }
 
-    fetchUser();
-  }, [router, supabase]);
+  if (role) {
+    router.push("/");
+  }
 
   useEffect(() => {
     const checkProfileCompletion = async () => {
@@ -62,6 +69,8 @@ const CompleteProfile = () => {
         ])
         .select();
 
+      setRole("freelancer");
+
       const { data2, error2 } = await supabase
         .from("user")
         .update({ role: "freelancer", profileCompleted: true })
@@ -93,6 +102,8 @@ const CompleteProfile = () => {
           },
         ])
         .select();
+
+      setRole("employer");
 
       const { data2, error2 } = await supabase
         .from("user")

@@ -1,9 +1,11 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import InputField from "@/components/ui/InputField";
 import Button from "@/components/ui/Button";
 import Message from "@/components/ui/Message";
 import axios from "axios";
+import { AuthInfo } from "@/context/AuthInfo";
+import { createClient } from "@/utils/supabase/client";
 
 interface MessageData {
   sender: "bot" | "user";
@@ -11,6 +13,42 @@ interface MessageData {
 }
 
 const Chat: React.FC = () => {
+  const { user, role, setRole } = useContext(AuthInfo);
+
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">You are not logged in.</h1>
+        <Button
+          onClick={() => {
+            window.location.href = "/";
+          }}
+          text="Login to continue"
+          className="mt-4"
+        />
+      </div>
+    );
+  }
+
+  if (!role) {
+    const supabase = createClient();
+    const { data, error } = supabase
+      .from("user")
+      .select("role")
+      .eq("userid", user.id)
+      .single();
+    if (error) {
+      console.error("Error fetching user role:", error);
+    }
+    if (data) {
+      setRole(data.role);
+    }
+  }
+
+  useEffect(() => {
+    console.log("role", role);
+  }, [role]);
+
   const [messages, setMessages] = useState<MessageData[]>([
     {
       sender: "bot",
@@ -74,6 +112,23 @@ const Chat: React.FC = () => {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  if (role !== "freelancer") {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">
+          You are not authorized to access this page.
+        </h1>
+        <Button
+          onClick={() => {
+            window.location.href = "/";
+          }}
+          text="Go back to home"
+          className="mt-4"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="relative flex flex-col h-screen text-black bg-white">
