@@ -3,16 +3,26 @@ import Footer from "@/components/navigation/Footer";
 import DashboardPublic from "@/components/pageComponents/DashboardPublic";
 import NavBar from "@/components/navigation/NavBar";
 import DashboardPrivate from "@/components/pageComponents/DashboardPrivate";
-import { useUser } from "@/context/UserContext";
+import { useContext } from "react";
+import { AuthInfo } from "@/context/AuthInfo";
+import EmployerDashboard from "@/components/pageComponents/EmployerDashboard";
 
 export default function Home() {
-  const { user } = useUser();
+  const { user, role } = useContext(AuthInfo);
 
   return (
     <main>
       <NavBar />
       <div className=" flex flex-col items-center text-center justify-center">
-        {user ? <DashboardPrivate /> : <DashboardPublic />}
+        {user ? (
+          role === "freelancer" ? (
+            <DashboardPrivate />
+          ) : (
+            <EmployerDashboard />
+          )
+        ) : (
+          <DashboardPublic />
+        )}
       </div>
       <Footer />
     </main>
