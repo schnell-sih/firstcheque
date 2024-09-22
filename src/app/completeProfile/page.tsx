@@ -1,16 +1,16 @@
 "use client";
 import Input from "@/components/ui/Input";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
-import { AuthInfo } from "@/context/AuthInfo";
+import { useAuthInfo } from "@/context/AuthInfo";
 
 const CompleteProfile = () => {
   const supabase = createClient();
   const router = useRouter();
-  const { user, setUser, role, setRole } = useContext(AuthInfo);
+  const { user, role, setRole } = useAuthInfo();
 
   if (!user) {
     return (

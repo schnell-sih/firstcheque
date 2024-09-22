@@ -1,14 +1,14 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import { createClient } from "@/utils/supabase/client";
 import NavLink from "@/components/navigation/NavLink";
-import { AuthInfo } from "@/context/AuthInfo";
+import { useAuthInfo } from "@/context/AuthInfo";
 
 const NavBar = () => {
   const supabase = createClient();
-  const { user, setUser, role, setRole } = useContext(AuthInfo);
+  const { user, setUser, role, setRole } = useAuthInfo();
   const router = useRouter();
 
   const handleProfileClick = () => {
