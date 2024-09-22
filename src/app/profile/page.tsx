@@ -1,5 +1,5 @@
 "use client";
-import ProfileContent from "@/components/profileComponents/profileContent";
+import ProfileContent from "@/components/profileComponents/ProfileContent"
 import React from "react";
 import { useState } from "react";
 
@@ -14,8 +14,6 @@ const Profile = () => {
         return  <ProfileContent/>;
       case 'Projects':
         return <div>Here are your projects.</div>;
-      case 'Skills':
-        return <div>Here are your skills.</div>;
       case 'Wallet':
         return <div>Here are your wallet</div>;
       case 'Settings':
@@ -37,10 +35,6 @@ const Profile = () => {
           <li className={`pb-4 cursor-pointer hover:text-white ${option === 'Profile'? 'text-white':null }`} 
             onClick={()=> setOption('Profile')}> 
               Profile
-          </li>
-          <li className={`pb-4 cursor-pointer hover:text-white ${option === 'Skills'? 'text-white': null}`} 
-            onClick={()=> setOption('Skills')}>
-              Skills
           </li>
           <li className={`pb-4 cursor-pointer hover:text-white ${option === 'Projects'? 'text-white':null}`} 
             onClick={()=> setOption('Projects')}>
