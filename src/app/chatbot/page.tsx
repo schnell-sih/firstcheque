@@ -1,11 +1,11 @@
 "use client";
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useRef } from "react";
 import InputField from "@/components/ui/InputField";
 import Button from "@/components/ui/Button";
 import Message from "@/components/ui/Message";
 import axios from "axios";
-import { AuthInfo } from "@/context/AuthInfo";
 import { createClient } from "@/utils/supabase/client";
+import { useAuthInfo } from "@/context/AuthInfo";
 
 interface MessageData {
   sender: "bot" | "user";
@@ -13,41 +13,7 @@ interface MessageData {
 }
 
 const Chat: React.FC = () => {
-  const { user, role, setRole } = useContext(AuthInfo);
-
-  if (!user) {
-    return (
-      <div className="flex flex-col items-center justify-center h-screen">
-        <h1 className="text-2xl font-bold">You are not logged in.</h1>
-        <Button
-          onClick={() => {
-            window.location.href = "/";
-          }}
-          text="Login to continue"
-          className="mt-4"
-        />
-      </div>
-    );
-  }
-
-  if (!role) {
-    const supabase = createClient();
-    const { data, error } = supabase
-      .from("user")
-      .select("role")
-      .eq("userid", user.id)
-      .single();
-    if (error) {
-      console.error("Error fetching user role:", error);
-    }
-    if (data) {
-      setRole(data.role);
-    }
-  }
-
-  useEffect(() => {
-    console.log("role", role);
-  }, [role]);
+  const { user, role, setRole } = useAuthInfo();
 
   const [messages, setMessages] = useState<MessageData[]>([
     {
@@ -66,6 +32,35 @@ const Chat: React.FC = () => {
       .replace(/(?:\r\n|\r|\n)/g, "<br>");
   };
 
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      if (!role && user) {
+        const supabase = createClient();
+        const { data, error } = await supabase
+          .from("user")
+          .select("role")
+          .eq("userid", user.id)
+          .single();
+
+        if (error) {
+          console.error("Error fetching user role:", error);
+        } else if (data) {
+          setRole(data.role);
+        }
+      }
+    };
+
+    fetchUserRole();
+  }, [user, role, setRole]);
+
+  useEffect(() => {
+    console.log("role", role);
+  }, [role]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const handleSendMessage = async () => {
     if (!input.trim()) return;
 
@@ -76,10 +71,15 @@ const Chat: React.FC = () => {
 
     setInput("");
 
+    const controller = new AbortController();
+    const signal = controller.signal;
+
     try {
-      const response = await axios.post("http://127.0.0.1:8000/chat", {
-        input_text: input,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/chat",
+        { input_text: input },
+        { signal }
+      );
 
       const formattedResponse = formatMessageToHTML(response.data.response);
 
@@ -88,6 +88,7 @@ const Chat: React.FC = () => {
         { sender: "bot", text: formattedResponse },
       ]);
     } catch (error) {
+      if (error.name === "AbortError") return;
       console.error("Error fetching chatbot response:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
@@ -97,21 +98,35 @@ const Chat: React.FC = () => {
         },
       ]);
     }
+
+    return () => controller.abort();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      if (e.shiftKey) {
-        return;
-      }
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
     }
   };
 
-  useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  if (!user) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">You are not logged in.</h1>
+        <Button
+          onClick={() => {
+            window.location.href = "/";
+          }}
+          text="Login to continue"
+          className="mt-4"
+        />
+      </div>
+    );
+  }
+
+  if (role === null) {
+    return <div>Loading...</div>;
+  }
 
   if (role !== "freelancer") {
     return (
@@ -120,9 +135,7 @@ const Chat: React.FC = () => {
           You are not authorized to access this page.
         </h1>
         <Button
-          onClick={() => {
-            window.location.href = "/";
-          }}
+          onClick={() => (window.location.href = "/")}
           text="Go back to home"
           className="mt-4"
         />

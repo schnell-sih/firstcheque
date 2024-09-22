@@ -3,12 +3,11 @@ import Footer from "@/components/navigation/Footer";
 import DashboardPublic from "@/components/pageComponents/DashboardPublic";
 import NavBar from "@/components/navigation/NavBar";
 import DashboardPrivate from "@/components/pageComponents/DashboardPrivate";
-import { useContext } from "react";
-import { AuthInfo } from "@/context/AuthInfo";
 import EmployerDashboard from "@/components/pageComponents/EmployerDashboard";
+import { useAuthInfo } from "@/context/AuthInfo";
 
 export default function Home() {
-  const { user, role } = useContext(AuthInfo);
+  const { user, role } = useAuthInfo();
 
   return (
     <main>

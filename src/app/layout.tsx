@@ -1,10 +1,9 @@
 "use client";
 import localFont from "next/font/local";
 import "./globals.css";
-import { AuthInfo } from "@/context/AuthInfo";
-import { useEffect, useMemo, useState } from "react";
-import { User } from "@supabase/supabase-js";
+import { useEffect } from "react";
 import { createClient } from "@/utils/supabase/client";
+import { AuthInfoProvider, useAuthInfo } from "@/context/AuthInfo";
 
 const supabase = createClient();
 
@@ -58,29 +57,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<string | null>(null);
-
-  const authInfoValue = useMemo(
-    () => ({ user, setUser, role, setRole }),
-    [user, role]
-  );
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (data && data.session) {
-        setUser(data.session.user);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    console.log("user", user);
-  }, [user]);
-
   return (
     <html lang="en">
       <head>
@@ -92,9 +68,28 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <AuthInfo.Provider value={authInfoValue}>
-        <body className={`${cygre.className} antialiased`}>{children}</body>
-      </AuthInfo.Provider>
+      <AuthInfoProvider>
+        <body className={`${cygre.className} antialiased`}>
+          <ContentWrapper>{children}</ContentWrapper>
+        </body>
+      </AuthInfoProvider>
     </html>
   );
+}
+
+function ContentWrapper({ children }: { children: React.ReactNode }) {
+  const { user, setUser } = useAuthInfo();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (data && data.session) {
+        setUser(data.session.user);
+      }
+    };
+
+    fetchUser();
+  }, [setUser]);
+
+  return <>{children}</>;
 }
