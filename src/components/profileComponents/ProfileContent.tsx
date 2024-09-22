@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from "react";
 import { useAuthInfo } from "@/context/AuthInfo";
 import { createClient } from "@/utils/supabase/client"
+import WalletContent from './WalletContent';
 
 
 interface FreelancerData {
@@ -15,10 +16,30 @@ interface EmployerData {
   website: string;
 }
 const ProfileContent = () => {
-    const { user, role } = useAuthInfo();
+    const { user, role ,setRole} = useAuthInfo();
     const [userData, setUserData] = useState<string | null>(null);
     const [freelancerData, setFreelancerData] = useState<FreelancerData | null>(null);
     const [employerData, setEmployerData] = useState<EmployerData | null>(null);    const supabase = createClient();
+    useEffect(() => {
+      const fetchUserRole = async () => {
+        if (!role && user) {
+          const supabase = createClient();
+          const { data, error } = await supabase
+            .from("user")
+            .select("role")
+            .eq("userid", user.id)
+            .single();
+  
+          if (error) {
+            console.error("Error fetching user role:", error);
+          } else if (data) {
+            setRole(data.role);
+          }
+        }
+      };
+  
+      fetchUserRole();
+    }, [user, role, setRole]);
     useEffect(()=>{
         const fetchProfileData = async () => {
           
@@ -83,7 +104,7 @@ const ProfileContent = () => {
           <p>No user </p>  
         )}
 
-        
+        <WalletContent/>
       </div>
     );
 }

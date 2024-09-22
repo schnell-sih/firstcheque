@@ -1,5 +1,7 @@
 "use client";
 import ProfileContent from "@/components/profileComponents/ProfileContent"
+import ProjectContent from "@/components/profileComponents/ProjectContent";
+import WalletContent from "@/components/profileComponents/WalletContent";
 import React from "react";
 import { useState } from "react";
 
@@ -13,11 +15,8 @@ const Profile = () => {
       case 'Profile':
         return  <ProfileContent/>;
       case 'Projects':
-        return <div>Here are your projects.</div>;
-      case 'Wallet':
-        return <div>Here are your wallet</div>;
-      case 'Settings':
-        return <div>Here are your profile settings.</div>;
+        return <ProjectContent/>;
+      
       default:
         return <div>Here is an overview of your profile</div>;
     }
@@ -40,17 +39,11 @@ const Profile = () => {
             onClick={()=> setOption('Projects')}>
               Projects
           </li>
-          <li className={`pb-4 cursor-pointer hover:text-white ${option === 'Wallet'? 'text-white':null}`} 
-            onClick={()=> setOption('Wallet')}>
-              Wallet
-          </li>
+          
         </ul>
         <p className="text-md text-gray-500 mt-10 pb-6">Account settings</p>
         <ul className="text-xs text-gray-400 ">
-        <li className={`pb-4 cursor-pointer hover:text-white ${option === 'Settings'? 'text-white':null }`} 
-            onClick={()=> setOption('Settings')}> 
-              Settings
-        </li>
+        
         <li className="pb-4 cursor-pointer hover:text-white" 
             onClick={()=> console.log("handle logout")}> 
               Logout
