@@ -1,6 +1,5 @@
 "use client";
 import SkillRecomendation from "@/components/recommendation/SkillRecommendations";
-import HistoryRecommendations from "@/components/recommendation/HistoryRecommendation";
 
 const DashboardPrivate = () => {
   return (
@@ -10,7 +9,6 @@ const DashboardPrivate = () => {
         Explore these job recommendations tailored for your skills.
       </p>
       <SkillRecomendation />
-      <HistoryRecommendations />
     </div>
   );
 };
