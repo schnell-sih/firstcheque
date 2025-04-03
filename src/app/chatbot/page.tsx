@@ -88,7 +88,6 @@ const Chat: React.FC = () => {
         { sender: "bot", text: formattedResponse },
       ]);
     } catch (error) {
-      if (error.name === "AbortError") return;
       console.error("Error fetching chatbot response:", error);
       setMessages((prevMessages) => [
         ...prevMessages,

@@ -100,7 +100,7 @@ const CompleteProfile = () => {
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("freelancer")
         .upsert([
           {
@@ -137,7 +137,7 @@ const CompleteProfile = () => {
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("employer")
         .upsert([
           {

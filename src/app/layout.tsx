@@ -78,11 +78,11 @@ export default function RootLayout({
 }
 
 function ContentWrapper({ children }: { children: React.ReactNode }) {
-  const { user, setUser } = useAuthInfo();
+  const { setUser } = useAuthInfo();
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getSession();
+      const { data } = await supabase.auth.getSession();
       if (data && data.session) {
         setUser(data.session.user);
       }
