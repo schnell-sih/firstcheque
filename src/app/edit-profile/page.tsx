@@ -210,12 +210,6 @@ const EditProfilePage = () => {
       }, 1500);
     } catch (error) {
       console.error("Error updating profile:", error);
-      setMessage({
-        text: `Failed to update profile: ${
-          (error as any)?.message || "Unknown error"
-        }`,
-        type: "error",
-      });
     } finally {
       setIsSaving(false);
     }

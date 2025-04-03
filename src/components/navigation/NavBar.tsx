@@ -86,7 +86,7 @@ const NavBar = () => {
       </div>
 
       <div>
-        <NavLink user={user} role={role} />
+        <NavLink user={user} role={role!} />
       </div>
 
       <div>
