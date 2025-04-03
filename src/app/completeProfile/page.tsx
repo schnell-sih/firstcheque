@@ -1,6 +1,6 @@
 "use client";
 import Input from "@/components/ui/Input";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import { createClient } from "@/utils/supabase/client";
@@ -8,9 +8,171 @@ import { useRouter } from "next/navigation";
 import { useAuthInfo } from "@/context/AuthInfo";
 
 const CompleteProfile = () => {
-  const supabase = createClient();
   const router = useRouter();
   const { user, role, setRole } = useAuthInfo();
+  const [isLoading, setIsLoading] = useState(true);
+  const [profileData, setProfileData] = useState({
+    role: "",
+    skills: "",
+    age: "",
+    gender: "",
+    companyName: "",
+    website: "",
+  });
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    const checkProfileCompletion = async () => {
+      setIsLoading(true);
+
+      if (!user?.id) {
+        setIsLoading(false);
+        return;
+      }
+
+      if (role) {
+        router.push("/");
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from("user")
+          .select("profileCompleted")
+          .eq("userid", user.id)
+          .single();
+
+        if (error) {
+          console.error(error);
+        } else if (data && data.profileCompleted) {
+          console.log("Profile already completed");
+          router.push("/");
+        }
+      } catch (error) {
+        console.error("Error checking profile:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkProfileCompletion();
+  }, [user, role, router]);
+
+  const handleInputChange = (field, value) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      [field]: value,
+    }));
+  };
+
+  const handleRoleSelect = (value) => {
+    setProfileData((prevData) => ({
+      ...prevData,
+      role: value,
+    }));
+  };
+
+  const handleSubmit = async () => {
+    const supabase = createClient();
+
+    if (profileData.role === "freelancer") {
+      if (!profileData.skills || !profileData.age || !profileData.gender) {
+        alert("Please fill in all required fields");
+        return;
+      }
+
+      await setFreeLancerData(supabase);
+    } else if (profileData.role === "employer") {
+      if (!profileData.companyName) {
+        alert("Please fill in all required fields");
+        return;
+      }
+
+      await setEmployerData(supabase);
+    }
+  };
+
+  const setFreeLancerData = async (supabase) => {
+    if (!user?.id) {
+      console.error("User ID is not available.");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("freelancer")
+        .upsert([
+          {
+            userid: user.id,
+            skills: profileData.skills,
+            age: profileData.age,
+            gender: profileData.gender,
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      await supabase
+        .from("user")
+        .update({ role: "freelancer", profileCompleted: true })
+        .eq("userid", user.id)
+        .single();
+
+      setRole("freelancer");
+      router.push("/");
+    } catch (error) {
+      console.error("Error setting freelancer data:", error);
+    }
+  };
+
+  const setEmployerData = async (supabase) => {
+    if (!user?.id) {
+      console.error("User ID is not available.");
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("employer")
+        .upsert([
+          {
+            id: user.id,
+            companyName: profileData.companyName,
+            website: profileData.website,
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error(error);
+        return;
+      }
+
+      await supabase
+        .from("user")
+        .update({ role: "employer", profileCompleted: true })
+        .eq("userid", user.id)
+        .single();
+
+      setRole("employer");
+      router.push("/");
+    } catch (error) {
+      console.error("Error setting employer data:", error);
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Loading...</h1>
+      </div>
+    );
+  }
 
   if (!user) {
     return (
@@ -26,134 +188,6 @@ const CompleteProfile = () => {
       </div>
     );
   }
-
-  if (role) {
-    router.push("/");
-  }
-
-  useEffect(() => {
-    const checkProfileCompletion = async () => {
-      if (user?.id) {
-        const { data, error } = await supabase
-          .from("user")
-          .select("profileCompleted")
-          .eq("userid", user.id)
-          .single();
-
-        if (error) {
-          console.error(error);
-          return;
-        }
-
-        if (data && data.profileCompleted) {
-          console.log("Profile already completed");
-          router.push("/");
-        }
-      }
-    };
-
-    checkProfileCompletion();
-  }, [user, router, supabase]);
-
-  const setFreeLancerData = async () => {
-    if (user?.id) {
-      const { data, error } = await supabase
-        .from("freelancer")
-        .upsert([
-          {
-            id: user.id,
-            skills: profileData.skills,
-            age: profileData.age,
-            gender: profileData.gender,
-          },
-        ])
-        .select();
-
-      setRole("freelancer");
-
-      const { data2, error2 } = await supabase
-        .from("user")
-        .update({ role: "freelancer", profileCompleted: true })
-        .eq("userid", user.id)
-        .single();
-
-      if (error || error2) {
-        console.log(error || error2);
-      }
-
-      if (data) {
-        console.log(data);
-        router.push("/");
-      }
-    } else {
-      console.error("User ID is not available.");
-    }
-  };
-
-  const setEmployerData = async () => {
-    if (user?.id) {
-      const { data, error } = await supabase
-        .from("employer")
-        .upsert([
-          {
-            id: user.id,
-            companyName: profileData.companyName,
-            website: profileData.website,
-          },
-        ])
-        .select();
-
-      setRole("employer");
-
-      const { data2, error2 } = await supabase
-        .from("user")
-        .update({ role: "employer", profileCompleted: true })
-        .eq("userid", user.id)
-        .single();
-
-      if (error || error2) {
-        console.log(error || error2);
-      }
-
-      if (data) {
-        console.log(data);
-        router.push("/");
-      }
-    } else {
-      console.error("User ID is not available.");
-    }
-  };
-
-  const [profileData, setProfileData] = React.useState({
-    role: "",
-    skills: "",
-    age: "",
-    gender: "",
-    companyName: "",
-    website: "",
-  });
-
-  const handleInputChange = (field: string, value: string | number) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
-  };
-
-  const handleRoleSelect = (value: string) => {
-    setProfileData((prevData) => ({
-      ...prevData,
-      role: value,
-    }));
-  };
-
-  const handleSubmit = () => {
-    if (profileData.role === "freelancer") {
-      setFreeLancerData();
-    } else if (profileData.role === "employer") {
-      setEmployerData();
-    }
-  };
 
   return (
     <div className="flex flex-col h-screen justify-center items-center text-center">
