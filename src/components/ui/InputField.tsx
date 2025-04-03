@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import React from "react";
 
 interface InputProps {
@@ -16,7 +17,7 @@ const InputField: React.FC<InputProps> = ({
   className,
 }) => {
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className={cn(`relative w-full`, className)}>
       <input
         type="text"
         placeholder={placeholder}

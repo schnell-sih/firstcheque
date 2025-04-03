@@ -1,3 +1,4 @@
+import { cn } from "@/utils/cn";
 import React, { useState } from "react";
 
 interface SelectProps {
@@ -23,7 +24,7 @@ const Select = ({
   };
 
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className={cn(`relative w-full`, className)}>
       <div
         className="flex items-center justify-between px-4 py-2 bg-white border border-neutral-400 rounded-full cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
