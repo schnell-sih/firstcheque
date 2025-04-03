@@ -6,6 +6,7 @@ import Button from "@/components/ui/Button";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { useAuthInfo } from "@/context/AuthInfo";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 const CompleteProfile = () => {
   const router = useRouter();
@@ -59,14 +60,14 @@ const CompleteProfile = () => {
     checkProfileCompletion();
   }, [user, role, router]);
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: string, value: string | number) => {
     setProfileData((prevData) => ({
       ...prevData,
       [field]: value,
     }));
   };
 
-  const handleRoleSelect = (value) => {
+  const handleRoleSelect = (value: string) => {
     setProfileData((prevData) => ({
       ...prevData,
       role: value,
@@ -93,7 +94,10 @@ const CompleteProfile = () => {
     }
   };
 
-  const setFreeLancerData = async (supabase) => {
+  const setFreeLancerData = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase: SupabaseClient<any, "public", any>
+  ) => {
     if (!user?.id) {
       console.error("User ID is not available.");
       return;
@@ -130,7 +134,10 @@ const CompleteProfile = () => {
     }
   };
 
-  const setEmployerData = async (supabase) => {
+  const setEmployerData = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    supabase: SupabaseClient<any, "public", any>
+  ) => {
     if (!user?.id) {
       console.error("User ID is not available.");
       return;
