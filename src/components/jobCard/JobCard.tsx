@@ -5,23 +5,16 @@ import JobCardDialog from "./JobCardDialog";
 interface JobProps {
   title: string;
   skills: string;
-  employer: string;
   description?: string;
   shadow?: boolean;
 }
 
-const JobCard = ({
-  title,
-  skills,
-  employer,
-  description,
-  shadow,
-}: JobProps) => {
+const JobCard = ({ title, skills, description, shadow }: JobProps) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
 
   const openDialog = () => setDialogOpen(true);
   const closeDialog = () => {
-    console.log("Dialog close function called"); // Debug log
+    console.log("Dialog close function called");
     setDialogOpen(false);
   };
 
@@ -36,7 +29,6 @@ const JobCard = ({
         <h1 className="text-2xl font-bold text-start">{title}</h1>
         <div className="text-md font-medium flex justify-between">
           <p>{skills}</p>
-          <p>{employer}</p>
         </div>
       </div>
       <JobCardDialog
@@ -44,7 +36,6 @@ const JobCard = ({
         onClose={closeDialog}
         title={title}
         skills={skills}
-        employer={employer}
         description={description}
       />
     </div>

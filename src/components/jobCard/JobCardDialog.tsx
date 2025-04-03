@@ -6,7 +6,6 @@ interface JobCardDialogProps {
   onClose: () => void;
   title: string;
   skills: string;
-  employer: string;
   description?: string;
 }
 
@@ -15,7 +14,6 @@ const JobCardDialog: React.FC<JobCardDialogProps> = ({
   onClose,
   title,
   skills,
-  employer,
   description,
 }) => {
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -51,7 +49,6 @@ const JobCardDialog: React.FC<JobCardDialogProps> = ({
         <p className="text-lg">{description}</p>
         <div className="flex flex-row justify-between mt-8">
           <p className="text-md">Skills: {skills}</p>
-          <p className="text-md">Employer: {employer}</p>
         </div>
         <div className="relative w-[75%] mx-auto flex flex-row justify-between mt-8">
           <button
